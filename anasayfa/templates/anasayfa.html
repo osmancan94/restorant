@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restoran QR Menü</title>
+</head>
+<body>
+    <header>
+        <h1>Restoran Adı</h1>
+        <p>Lezzetli yemekler, hızlı sipariş!</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#menu">Menü</a></li>
+            <li><a href="#about">Hakkımızda</a></li>
+            <li><a href="#contact">İletişim</a></li>
+        </ul>
+    </nav>
+
+    <section id="menu">
+        <h2>Menü</h2>
+
+        <div class="menu-category">
+            <h3>Ana Yemekler</h3>
+
+            <div class="menu-item">
+                <img src="/static/food/adana_kebab.jpeg" alt="Adana Kebap" class="menu-image">
+                <div>
+                    <p><strong>Adana Kebap</strong></p>
+                    <p>Lezzetli ızgara kebap - 80₺</p>
+                    <form method="POST" action="{% url 'siparis_ver' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="urun_adi" value="Adana Kebap">
+                        <button type="submit" class="add-to-cart">Sipariş Ver</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="/static/food/tavuk_izgara.jpeg" alt="Izgara Tavuk" class="menu-image">
+                <div>
+                    <p><strong>Izgara Tavuk</strong></p>
+                    <p>Baharatlı ve lezzetli - 70₺</p>
+                    <form method="POST" action="{% url 'siparis_ver' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="urun_adi" value="Izgara Tavuk">
+                        <button type="submit" class="add-to-cart">Sipariş Ver</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h3>İçecekler</h3>
+
+            <div class="menu-item">
+                <img src="/static/food/salgam.jpeg" alt="Şalgam" class="menu-image">
+                <div>
+                    <p><strong>Şalgam</strong></p>
+                    <p>Soğuk ve ferahlatıcı - 15₺</p>
+                    <form method="POST" action="{% url 'siparis_ver' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="urun_adi" value="Şalgam">
+                        <button type="submit" class="add-to-cart">Sipariş Ver</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="/static/food/ayran.jpeg" alt="Ayran" class="menu-image">
+                <div>
+                    <p><strong>Ayran</strong></p>
+                    <p>Ev yapımı - 10₺</p>
+                    <form method="POST" action="{% url 'siparis_ver' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="urun_adi" value="Ayran">
+                        <button type="submit" class="add-to-cart">Sipariş Ver</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Restoran Adı. Tüm hakları saklıdır.</p>
+    </footer>
+
+</body>
+</html>
