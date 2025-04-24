@@ -14,5 +14,11 @@ def siparis_ver(request):
         return redirect('order')  # ya da teşekkür sayfası
     return redirect('order')
 
+def sepet(request):
+    sepet_urun_sayisi = request.session.get("sepet_urun_sayisi", 0)
+    return render(request, 'anasayfa/anasayfa.html', {
+        "sepet_urun_sayisi": sepet_urun_sayisi
+    })
+
 
 

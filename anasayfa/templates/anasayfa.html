@@ -4,8 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restoran QR Menü</title>
+
+    <!-- Font Awesome sepet ikonu -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .sepet-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .sepet-link {
+            position: relative;
+            font-size: 24px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .sepet-sayisi {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        .menu-item {
+            display: flex;
+            margin: 10px 0;
+        }
+
+        .menu-image {
+            width: 100px;
+            height: 100px;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+        }
+
+        .add-to-cart {
+            padding: 6px 12px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
+
+    <!-- 🛒 SEPET ALANI -->
+    <div class="sepet-container">
+        <a href="{% url 'cart' %}" class="sepet-link">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="sepet-sayisi">{{ sepet_urun_sayisi|default:"0" }}</span>
+        </a>
+    </div>
+
     <header>
         <h1>Restoran Adı</h1>
         <p>Lezzetli yemekler, hızlı sipariş!</p>
