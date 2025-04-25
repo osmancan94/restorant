@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sepetiniz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        .sepet-baslik {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+            color: #333;
+        }
+
+        .sepet-urunler {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .sepet-urun {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sepet-urun strong {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .sepet-bos {
+            text-align: center;
+            color: #777;
+            margin-top: 50px;
+            font-size: 20px;
+        }
+
+        .sepet-tamamla {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+
+        .sepet-tamamla:hover {
+            background-color: #218838;
+        }
+
+        .sepet-link {
+            text-decoration: none;
+            color: white;
+        }
+
+        .sil-link {
+            color: red;
+            font-size: 14px;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 class="sepet-baslik">🛒 Sepetiniz</h1>
+
+    {% if cart %}
+        <div class="sepet-urunler">
+            {% for urun in cart %}
+                <div class="sepet-urun">
+                    <div>
+                        <strong>{{ urun }}</strong>
+                        <a href="{% url 'urun_sil' urun_adi=urun %}" class="sil-link">Sil</a>
+                    </div>
+                    <span>Adet: 1</span>
+                </div>
+            {% endfor %}
+
+            <a href="#" class="sepet-tamamla">
+                <span class="sepet-link">Siparişi Tamamla</span>
+            </a>
+        </div>
+    {% else %}
+        <p class="sepet-bos">Sepetiniz şu anda boş.</p>
+    {% endif %}
+
+</body>
+</html>

@@ -97,64 +97,27 @@
         <h2>Menü</h2>
 
         <div class="menu-category">
-            <h3>Ana Yemekler</h3>
+            <h3>Ürünler</h3>
 
+            {% for urun in urunler %}
             <div class="menu-item">
-                <img src="/static/food/adana_kebab.jpeg" alt="Adana Kebap" class="menu-image">
+                <img src="{{ urun.resim.url }}" alt="{{ urun.isim }}" class="menu-image">
                 <div>
-                    <p><strong>Adana Kebap</strong></p>
-                    <p>Lezzetli ızgara kebap - 80₺</p>
+                    <p><strong>{{ urun.isim }}</strong></p>
+                    <p>{{ urun.aciklama }}</p>
+                    <p>Fiyat: {{ urun.fiyat }}₺</p>
                     <form method="POST" action="{% url 'siparis_ver' %}">
                         {% csrf_token %}
-                        <input type="hidden" name="urun_adi" value="Adana Kebap">
+                        <input type="hidden" name="urun_adi" value="{{ urun.isim }}">
                         <button type="submit" class="add-to-cart">Sipariş Ver</button>
                     </form>
                 </div>
             </div>
-
-            <div class="menu-item">
-                <img src="/static/food/tavuk_izgara.jpeg" alt="Izgara Tavuk" class="menu-image">
-                <div>
-                    <p><strong>Izgara Tavuk</strong></p>
-                    <p>Baharatlı ve lezzetli - 70₺</p>
-                    <form method="POST" action="{% url 'siparis_ver' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="urun_adi" value="Izgara Tavuk">
-                        <button type="submit" class="add-to-cart">Sipariş Ver</button>
-                    </form>
-                </div>
-            </div>
+            {% empty %}
+            <p>Henüz ürün eklenmedi.</p>
+            {% endfor %}
         </div>
 
-        <div class="menu-category">
-            <h3>İçecekler</h3>
-
-            <div class="menu-item">
-                <img src="/static/food/salgam.jpeg" alt="Şalgam" class="menu-image">
-                <div>
-                    <p><strong>Şalgam</strong></p>
-                    <p>Soğuk ve ferahlatıcı - 15₺</p>
-                    <form method="POST" action="{% url 'siparis_ver' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="urun_adi" value="Şalgam">
-                        <button type="submit" class="add-to-cart">Sipariş Ver</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="menu-item">
-                <img src="/static/food/ayran.jpeg" alt="Ayran" class="menu-image">
-                <div>
-                    <p><strong>Ayran</strong></p>
-                    <p>Ev yapımı - 10₺</p>
-                    <form method="POST" action="{% url 'siparis_ver' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="urun_adi" value="Ayran">
-                        <button type="submit" class="add-to-cart">Sipariş Ver</button>
-                    </form>
-                </div>
-            </div>
-        </div>
     </section>
 
     <footer>
