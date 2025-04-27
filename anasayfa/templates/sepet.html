@@ -97,9 +97,10 @@
                 </div>
             {% endfor %}
 
-            <a href="#" class="sepet-tamamla">
+            <a href="{% url 'odeme_baslat' %}" class="sepet-tamamla">
                 <span class="sepet-link">Siparişi Tamamla</span>
             </a>
+            
         </div>
     {% else %}
         <p class="sepet-bos">Sepetiniz şu anda boş.</p>

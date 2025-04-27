@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'anasayfa',
     'record',
-    'orders'
+    'orders',
+    'odeme'
+
 ]
 
 MIDDLEWARE = [

@@ -23,6 +23,7 @@ urlpatterns = [
     path('anasayfa/', include("anasayfa.urls"), name='home'),
     path('record/', include("record.urls")),
     path('orders/', include("orders.urls")),
+    path('ödeme/',include("odeme.urls"))
 ]
 
 if settings.DEBUG:

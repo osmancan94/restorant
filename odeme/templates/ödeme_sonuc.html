@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ödeme Sonucu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .odeme-sonuc-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .odeme-sonuc-container h1 {
+            color: #28a745;
+        }
+
+        .odeme-sonuc-container p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .odeme-sonuc-container a {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .odeme-sonuc-container a:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="odeme-sonuc-container">
+        <h1>Ödeme Başarılı!</h1>
+        <p>Ödemeniz başarıyla tamamlandı. Teşekkür ederiz!</p>
+        <p><strong>Ödeme Detaylarınız:</strong></p>
+        <p><strong>Kart Numarası:</strong> {{ card_number }}</p>
+        <p><strong>Son Kullanma Tarihi:</strong> {{ expiry_date }}</p>
+        <p><strong>CVV:</strong> {{ cvv }}</p>
+        
+        <a href="{% url 'home' %}">Anasayfaya Dön</a>
+    </div>
+
+</body>
+</html>

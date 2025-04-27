@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ödeme Başarısız</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .odeme-hata-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .odeme-hata-container h1 {
+            color: #dc3545;
+        }
+
+        .odeme-hata-container p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .odeme-hata-container a {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #dc3545;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .odeme-hata-container a:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="odeme-hata-container">
+        <h1>Ödeme Başarısız</h1>
+        <p>Ödemeniz alınamadı. Lütfen bilgilerinizi kontrol edin ve tekrar deneyin.</p>
+        <p><a href="{% url 'odeme_baslat' %}">Tekrar Dene</a></p>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ödeme İşlemi</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #555;
+            display: block;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus {
+            border-color: #28a745;
+            background-color: #e9f7e5;
+            outline: none;
+        }
+
+        button[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            padding: 12px;
+            width: 100%;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        .form-container p {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .form-container p a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .form-container p a:hover {
+            text-decoration: underline;
+        }
+
+        .form-container .note {
+            color: #ff5722;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h1>Ödeme Bilgilerinizi Girin</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            <label for="card_number">Kart Numarası:</label>
+            <input type="text" name="card_number" id="card_number" required placeholder="Kart numaranızı girin"><br>
+
+            <label for="expiry_date">Son Kullanma Tarihi:</label>
+            <input type="text" name="expiry_date" id="expiry_date" required placeholder="MM/YY formatında"><br>
+
+            <label for="cvv">CVV:</label>
+            <input type="text" name="cvv" id="cvv" required placeholder="3 haneli güvenlik kodu"><br>
+
+            <button type="submit">Ödeme Yap</button>
+        </form>
+
+        <p class="note">*Ödeme bilgilerinizi güvende tutuyoruz.</p>
+    </div>
+
+</body>
+</html>
