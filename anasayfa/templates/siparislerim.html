@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Siparişlerim</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 60px auto;
+            background-color: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f1f1f1;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .tarih {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .no-orders {
+            text-align: center;
+            color: #666;
+            font-size: 18px;
+            padding: 40px 0;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🧾 Siparişlerim</h1>
+
+        {% if siparisler %}
+            <ul>
+                {% for siparis in siparisler %}
+                    <li>
+                        <span>{{ siparis.urun_adi }}</span>
+                        <span class="tarih">{{ siparis.tarih|date:"d M Y - H:i" }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="no-orders">Henüz sipariş vermediniz.</div>
+        {% endif %}
+
+        <div class="button-container">
+            <a href="{% url 'homee' %}" class="back-button">← Geri Dön</a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-<!-- login.html -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -7,26 +7,59 @@
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
-            background-color: #f2f2f2;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
         }
 
         .login-container {
-            background-color: white;
-            padding: 30px 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .logo img {
+            width: 80px;
         }
 
         h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             color: #333;
+        }
+
+        .welcome {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #4CAF50;
+            outline: none;
         }
 
         button {
@@ -34,59 +67,128 @@
             background-color: #4CAF50;
             color: white;
             border: none;
-            padding: 12px;
+            padding: 14px;
             font-size: 16px;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             margin-top: 10px;
+            transition: background-color 0.3s ease;
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #43a047;
         }
 
-        ul.errorlist {
-            list-style: none;
-            padding: 0;
-            color: #e53935;
+        .links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .links a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .demo-button {
             margin-top: 10px;
+            text-align: center;
         }
 
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            margin-top: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
+        .demo-button button {
+            background-color: #2196F3;
+        }
+
+        .error-box {
+            background: #ffe6e6;
+            padding: 12px;
             border-radius: 6px;
-            box-sizing: border-box;
+            color: #a00;
+            margin-bottom: 15px;
         }
 
-        label {
-            font-weight: bold;
-            color: #555;
+        .password-toggle {
+            position: relative;
+        }
+
+        .toggle-icon {
+            position: absolute;
+            right: 15px;
+            top: 45px;
+            cursor: pointer;
+            color: #888;
+            user-select: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
     <div class="login-container">
+
+        <div class="logo">
+            <img src="{% static 'img/logo.png' %}" alt="Logo">
+        </div>
+
         <h2>Giriş Yap</h2>
+        <p class="welcome">Yeniden hoş geldiniz! Lütfen giriş yapın.</p>
+
+        {% if form.non_field_errors %}
+            <div class="error-box">
+                {{ form.non_field_errors.0 }}
+            </div>
+        {% endif %}
+
         <form method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
+            {% for field in form %}
+                <div class="{% if field.name == 'password' %}password-toggle{% endif %}">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.name == 'password' %}
+                        <span class="toggle-icon" onclick="togglePassword()" id="toggleIcon">👁️</span>
+                    {% endif %}
+                </div>
+            {% endfor %}
             <button type="submit">Giriş Yap</button>
         </form>
 
-        {% if form.errors %}
-            <ul class="errorlist">
-                {% for field in form %}
-                    {% for error in field.errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                {% endfor %}
-            </ul>
-        {% endif %}
+        <div class="links">
+            <a href="{% url 'password_reset' %}">Şifremi Unuttum?</a>
+            <a href="{% url 'register' %}">Kayıt Ol</a>
+        </div>
+
+        <div class="demo-button">
+            <button onclick="autoFill()">Demo Kullanıcı</button>
+        </div>
+
     </div>
+
+    <script>
+        function autoFill() {
+            document.querySelector('input[name="username"]').value = "demo";
+            document.querySelector('input[name="password"]').value = "demo123";
+        }
+
+        function togglePassword() {
+            const passwordInput = document.querySelector('input[name="password"]');
+            const toggleIcon = document.getElementById('toggleIcon');
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.textContent = "🙈"; // gizle
+            } else {
+                passwordInput.type = "password";
+                toggleIcon.textContent = "👁️"; // göster
+            }
+        }
+    </script>
 </body>
 </html>
-

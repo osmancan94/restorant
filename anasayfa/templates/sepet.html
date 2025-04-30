@@ -2,10 +2,8 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sepetiniz</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -49,11 +47,11 @@
             font-size: 20px;
         }
 
-        .sepet-tamamla {
+        .sepet-tamamla, .sepet-temizle {
             display: block;
             width: 100%;
             padding: 12px;
-            margin-top: 20px;
+            margin-top: 15px;
             background-color: #28a745;
             color: white;
             font-size: 16px;
@@ -67,6 +65,14 @@
             background-color: #218838;
         }
 
+        .sepet-temizle {
+            background-color: #dc3545;
+        }
+
+        .sepet-temizle:hover {
+            background-color: #c82333;
+        }
+
         .sepet-link {
             text-decoration: none;
             color: white;
@@ -78,9 +84,15 @@
             text-decoration: none;
             margin-left: 15px;
         }
+
+        .toplam-tutar {
+            text-align: right;
+            font-size: 18px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
     </style>
 </head>
-
 <body>
 
     <h1 class="sepet-baslik">🛒 Sepetiniz</h1>
@@ -91,19 +103,25 @@
                 <div class="sepet-urun">
                     <div>
                         <strong>{{ urun }}</strong>
-                        <a href="{% url 'urun_sil' urun_adi=urun %}" class="sil-link">Sil</a>
+                        <a href="{% url 'urun_sil' urun_adi=urun %}" class="sil-link">🗑️ Sil</a>
                     </div>
                     <span>Adet: 1</span>
                 </div>
             {% endfor %}
 
-            <a href="{% url 'odeme_baslat' %}" class="sepet-tamamla">
-                <span class="sepet-link">Siparişi Tamamla</span>
+            <p class="toplam-tutar">Toplam: {{ toplam_tutar }}₺</p>
+
+            <a href="{% url 'odeme_baslat' %}" class="sepet-tamamla" onclick="return confirm('Siparişi tamamlamak istiyor musunuz?')">
+                <span class="sepet-link">✅ Siparişi Tamamla</span>
             </a>
-            
+
+            <a href="{% url 'sepet_temizle' %}" class="sepet-temizle">
+                <span class="sepet-link">🧹 Sepeti Temizle</span>
+            </a>
         </div>
     {% else %}
         <p class="sepet-bos">Sepetiniz şu anda boş.</p>
+        <a href="{% url 'homee' %}" class="sepet-tamamla">Menüye Geri Dön</a>
     {% endif %}
 
 </body>

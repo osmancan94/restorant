@@ -1,23 +1,126 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restoran QR Menü</title>
-
-    <!-- Font Awesome sepet ikonu -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: rgb(248, 216, 210);
+        }
+
+        .menu-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1100;
+            font-size: 28px;
+            color: #343a40;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+
+        .sidebar {
+            width: 220px;
+            height: 100%;
+            background-color: #343a40;
+            position: fixed;
+            top: 0;
+            left: -220px;
+            transition: left 0.3s ease;
+            padding-top: 60px;
+            z-index: 1000;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar a, .sidebar form {
+            display: block;
+            padding: 15px 20px;
+            text-decoration: none;
+            color: white;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .sidebar a:hover, .sidebar form:hover {
+            background-color: #495057;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff5f5;
+            padding: 20px 30px;
+            border-bottom: 1px solid #ddd;
+            margin-left: 0;
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar.active ~ .header-bar {
+            margin-left: 220px;
+        }
+
+        .site-title {
+    font-size: 40px;
+    color: #e74c3c;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+}
+
+
+.search-box {
+    display: flex;
+    align-items: center;
+    padding-right: 30px;  /* ← Bu satırı ekle veya arttır */
+}
+
+
+        .search-box input {
+            padding: 7px 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .content {
+            padding: 30px;
+            margin-left: 0;
+            transition: margin-left 0.5s ease;
+        }
+
+        .sidebar.active ~ .content {
+            margin-left: 220px;
         }
 
         .sepet-container {
             position: fixed;
             top: 20px;
             right: 20px;
-            z-index: 1000;
+            z-index: 900;
         }
 
         .sepet-link {
@@ -38,27 +141,47 @@
             border-radius: 50%;
         }
 
-        .menu-item {
+        .menu-category {
             display: flex;
-            margin: 10px 0;
+            flex-direction: column;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .menu-row {
+            display: flex;
+            justify-content: center;
+            gap: 100px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .menu-item {
+            background-color: rgb(253, 184, 184);
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            width: 45%;
+            padding: 15px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .menu-image {
-            width: 100px;
-            height: 100px;
-            margin-right: 10px;
+            width: 450px;
+            height: 250px;
             object-fit: cover;
+            margin-bottom: 20px;
         }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 15px;
-            padding: 0;
+        .menu-item p {
+            font-size: 18px;
+            margin: 5px 0;
         }
 
-        nav a {
-            text-decoration: none;
+        .menu-item strong {
+            font-size: 20px;
         }
 
         .add-to-cart {
@@ -67,63 +190,198 @@
             color: white;
             border: none;
             border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
         }
+
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            color: #555;
+        }
+
+        @media screen and (max-width: 768px) {
+            .menu-item {
+                width: 90%;
+            }
+
+            .header-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .search-box {
+                margin-top: 10px;
+                width: 100%;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+        }
+
+        body.dark-mode {
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+}
+
+body.dark-mode a {
+    color: #90caf9;
+}
+
+body.dark-mode .menu-item {
+    background-color: #2c2c2c;
+    border-color: #444;
+}
+
+body.dark-mode .sidebar {
+    background-color: #111;
+}
+
+body.dark-mode input,
+body.dark-mode textarea {
+    background-color: #2d2d2d;
+    color: white;
+    border: 1px solid #555;
+}
+
     </style>
 </head>
 <body>
 
-    <!-- 🛒 SEPET ALANI -->
+    <!-- ☰ Hamburger menü butonu -->
+    <div class="menu-toggle" onclick="toggleSidebar()">☰</div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <h2>🍽️ Menü</h2>
+        <a href="#menu"><i class="fas fa-utensils"></i> Menü</a>
+        <a href="#about"><i class="fas fa-info-circle"></i> Hakkımızda</a>
+        <a href="#contact"><i class="fas fa-envelope"></i> İletişim</a>
+        <a href="{% url 'siparislerim' %}"><i class="fas fa-receipt"></i> Siparişlerim</a>
+        <a href="{% url 'profil' %}"><i class="fas fa-user-cog"></i> Profilim</a>
+        <a href="{% url 'yardim' %}"><i class="fas fa-question-circle"></i> Yardım / SSS</a>
+
+        <a href="#" onclick="toggleDarkMode()">
+            <i class="fas fa-moon"></i> Karanlık Mod
+        </a>
+        
+
+
+
+        <a href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i> Sepet</a>
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">
+                <i class="fas fa-sign-out-alt"></i> Çıkış Yap
+            </button>
+        </form>
+    </div>
+
+    <!-- HEADER BAR -->
+    <div class="header-bar">
+        <h1 class="site-title">RABİANIN KIBRIS MUTFAĞI</h1>
+        <div class="search-box">
+            <input type="text" id="aramaKutusu" placeholder="Ürün Ara...">
+        </div>
+    </div>
+
+    <!-- Sepet -->
     <div class="sepet-container">
         <a href="{% url 'cart' %}" class="sepet-link">
             <i class="fas fa-shopping-cart"></i>
-            <span class="sepet-sayisi">{{ sepet_urun_sayisi|default:"0" }}</span>
+            <span id="sepetSayisi" class="sepet-sayisi">{{ sepet_urun_sayisi|default:"0" }}</span>
         </a>
     </div>
 
-    <header>
-        <h1>Restoran Adı</h1>
-        <p>Lezzetli yemekler, hızlı sipariş!</p>
-    </header>
-    
-    <nav>
-        <ul>
-            <li><a href="#menu">Menü</a></li>
-            <li><a href="#about">Hakkımızda</a></li>
-            <li><a href="#contact">İletişim</a></li>
-        </ul>
-    </nav>
+    <!-- İçerik -->
+    <div class="content">
+        <section id="menu">
+            <h2>Menü</h2>
 
-    <section id="menu">
-        <h2>Menü</h2>
+            <div class="menu-category" id="menuKategori">
+                <h3>Ürünler</h3>
 
-        <div class="menu-category">
-            <h3>Ürünler</h3>
+                {% for urun in urunler %}
+                    {% if forloop.counter0|divisibleby:2 %}
+                    <div class="menu-row">
+                    {% endif %}
 
-            {% for urun in urunler %}
-            <div class="menu-item">
-                <img src="{{ urun.resim.url }}" alt="{{ urun.isim }}" class="menu-image">
-                <div>
-                    <p><strong>{{ urun.isim }}</strong></p>
-                    <p>{{ urun.aciklama }}</p>
-                    <p>Fiyat: {{ urun.fiyat }}₺</p>
-                    <form method="POST" action="{% url 'siparis_ver' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="urun_adi" value="{{ urun.isim }}">
-                        <button type="submit" class="add-to-cart">Sipariş Ver</button>
-                    </form>
-                    
-                </div>
+                    <div class="menu-item" data-isim="{{ urun.isim|lower }}">
+                        <img src="{{ urun.resim.url }}" alt="{{ urun.isim }}" class="menu-image">
+                        <div>
+                            <p><strong>{{ urun.isim }}</strong></p>
+                            <p>{{ urun.aciklama }}</p>
+                            <p>Fiyat: {{ urun.fiyat }}₺</p>
+                            <form method="POST" action="{% url 'siparis_ver' %}" class="siparis-form">
+                                {% csrf_token %}
+                                <input type="hidden" name="urun_adi" value="{{ urun.isim }}">
+                                <button type="submit" class="add-to-cart">Sipariş Ver</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    {% if forloop.counter|divisibleby:2 or forloop.last %}
+                    </div>
+                    {% endif %}
+                {% empty %}
+                <p>Henüz ürün eklenmedi.</p>
+                {% endfor %}
             </div>
-            {% empty %}
-            <p>Henüz ürün eklenmedi.</p>
-            {% endfor %}
-        </div>
+        </section>
 
-    </section>
+        <footer>
+            <p>&copy; 2025 Restoran Adı. Tüm hakları saklıdır.</p>
+        </footer>
+    </div>
 
-    <footer>
-        <p>&copy; 2025 Restoran Adı. Tüm hakları saklıdır.</p>
-    </footer>
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("active");
+            document.querySelector(".content").classList.toggle("active");
+            document.querySelector(".header-bar").classList.toggle("active");
+        }
+
+        const aramaKutusu = document.getElementById('aramaKutusu');
+        const menuItemlar = document.querySelectorAll('.menu-item');
+
+        aramaKutusu.addEventListener('input', function () {
+            const aranan = this.value.toLowerCase();
+            menuItemlar.forEach(item => {
+                const isim = item.getAttribute('data-isim');
+                item.style.display = isim.includes(aranan) ? 'flex' : 'none';
+            });
+        });
+
+        const sepetSayisi = document.getElementById('sepetSayisi');
+        const siparisFormlar = document.querySelectorAll('.siparis-form');
+
+        siparisFormlar.forEach(form => {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                let sayi = parseInt(sepetSayisi.textContent);
+                sayi += 1;
+                sepetSayisi.textContent = sayi;
+                form.submit();
+            });
+        });
+
+        function toggleDarkMode() {
+        document.body.classList.toggle("dark-mode");
+
+        // Kalıcı olması için localStorage kullanılabilir
+        const isDark = document.body.classList.contains("dark-mode");
+        localStorage.setItem("dark-mode", isDark);
+    }
+
+    // Sayfa yüklendiğinde dark mode açıksa uygula
+    window.onload = function () {
+        const isDark = localStorage.getItem("dark-mode") === "true";
+        if (isDark) {
+            document.body.classList.add("dark-mode");
+        }
+    }
+    </script>
 
 </body>
 </html>

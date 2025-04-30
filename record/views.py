@@ -37,7 +37,7 @@ def user_login(request):
 
             if user is not None:  # Kullanıcı doğruysa
                 login(request, user)  # Oturum açma
-                return redirect('home')  # Ana sayfaya yönlendir
+                return redirect('homee')  # Ana sayfaya yönlendir
             else:
                 form.add_error(None, 'Geçersiz kullanıcı adı veya şifre.')
     else:
